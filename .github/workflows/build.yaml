@@ -20,7 +20,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -37,17 +37,16 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
 
-    - name: Install tools
-      run: |
-        sudo apt update
-        sudo apt install -y unzip curl
-        curl -L -O https://github.com/protocolbuffers/protobuf/releases/download/v25.1/protoc-25.1-linux-x86_64.zip
-        sudo unzip -o protoc-25.1-linux-x86_64.zip -d /usr/local
+    # - name: Install tools
+    #   run: |
+    #     sudo apt update
+    #     sudo apt install -y unzip curl
+    #     curl -L -O https://github.com/protocolbuffers/protobuf/releases/download/v25.1/protoc-25.1-linux-x86_64.zip
+    #     sudo unzip -o protoc-25.1-linux-x86_64.zip -d /usr/local
 
-    - name: Generate protobuf source
-      run: |
-        mkdir -p build/gen
-        protoc --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
+    # - name: Generate protobuf source
+    #   run: |
+    #     ./protobufGen.cmd
 
     - name: Restore
       run: dotnet restore
