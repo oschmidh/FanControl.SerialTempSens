@@ -1,8 +1,4 @@
 ﻿using FanControl.Plugins;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.IO.Ports;
 
 namespace FanControl.SerialTempSensPlugin
@@ -13,15 +9,6 @@ namespace FanControl.SerialTempSensPlugin
         private SerialPort _serialPort;
 
         public string Name => "SerialTempSens";
-
-        public void Close()
-        {
-            if (_isInitialised)
-            {
-                _serialPort.Close();
-                _isInitialised = false;
-            }
-        }
 
         public void Initialize()
         {
@@ -40,6 +27,15 @@ namespace FanControl.SerialTempSensPlugin
             {
                 SerialTempSens sensor = new SerialTempSens(_serialPort);
                 _container.TempSensors.Add(sensor);
+            }
+        }
+
+        public void Close()
+        {
+            if (_isInitialised)
+            {
+                _serialPort.Close();
+                _isInitialised = false;
             }
         }
     }
