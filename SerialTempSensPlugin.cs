@@ -14,6 +14,15 @@ namespace FanControl.SerialTempSensPlugin
 
         public string Name => "SerialTempSens";
 
+        public void Close()
+        {
+            if (_isInitialised)
+            {
+                _serialPort.Close();
+                _isInitialised = false;
+            }
+        }
+
         public void Initialize()
         {
             _serialPort = new SerialPort();
@@ -31,15 +40,6 @@ namespace FanControl.SerialTempSensPlugin
             {
                 SerialTempSens sensor = new SerialTempSens(_serialPort);
                 _container.TempSensors.Add(sensor);
-            }
-        }
-
-        public void Close()
-        {
-            if (_isInitialised)
-            {
-                _serialPort.Close();
-                _isInitialised = false;
             }
         }
     }
