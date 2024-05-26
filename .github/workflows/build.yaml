@@ -47,7 +47,7 @@ jobs:
       shell: pwsh
       run: |
         mkdir build\gen
-        ./protoc/protoc.exe --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
+        ./protoc/bin/protoc.exe --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
 
     - name: Restore
       run: dotnet restore
