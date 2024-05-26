@@ -7,8 +7,8 @@
     <ProjectGuid>{97345F0C-C3A3-4BB5-BFDD-11C34C7EA819}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FanControl.UartSensorPlugin</RootNamespace>
-    <AssemblyName>FanControl.UartSensorPlugin</AssemblyName>
+    <RootNamespace>FanControl.SerialTempSens</RootNamespace>
+    <AssemblyName>FanControl.SerialTempSens</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -48,9 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UartSensorPlugin.cs" />
+    <Compile Include="SerialTempSensPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UartSensor.cs" />
+    <Compile Include="SerialTempSens.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Dlls\FanControl.Plugins.dll" />

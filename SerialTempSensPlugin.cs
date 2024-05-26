@@ -5,14 +5,14 @@ using System.IO;
 using System.Linq;
 using System.IO.Ports;
 
-namespace FanControl.UartSensorPlugin
+namespace FanControl.SerialTempSensPlugin
 {
-    public class UartSensorPlugin : IPlugin
+    public class SerialTempSensPlugin : IPlugin
     {
         private bool _isInitialised = false;
         private SerialPort _serialPort;
 
-        public string Name => "UartSensor";
+        public string Name => "SerialTempSens";
 
         public void Close()
         {
@@ -30,14 +30,13 @@ namespace FanControl.UartSensorPlugin
             _serialPort.PortName = "COM3";  // TODO detect port somehow
             _serialPort.Open();
             _isInitialised = true;
-
         }
 
         public void Load(IPluginSensorsContainer _container)
         {
             if (_isInitialised)
             {
-                UartSensor sensor = new UartSensor(_serialPort);
+                SerialTempSens sensor = new SerialTempSens(_serialPort);
                 _container.TempSensors.Add(sensor);
             }
         }
