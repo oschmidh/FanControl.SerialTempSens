@@ -49,8 +49,14 @@ jobs:
         mkdir build\gen
         ./protoc/bin/protoc.exe --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
 
-    - name: Restore
-      run: dotnet restore
+    # - name: Restore
+    #   run: dotnet restore
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Restore NuGet Packages
+      run: nuget restore FanControl.SerialTempSens.sln
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
