@@ -26,8 +26,10 @@ namespace FanControl.SerialTempSensPlugin
         public void Initialize()
         {
             _serialPort = new SerialPort();
-            _serialPort.BaudRate = 9600;
+            _serialPort.BaudRate = 115200;
             _serialPort.PortName = "COM3";  // TODO detect port somehow
+            _serialPort.ReadTimeout = 500;
+            _serialPort.WriteTimeout = 500;
             _serialPort.Open();
             _isInitialised = true;
         }
