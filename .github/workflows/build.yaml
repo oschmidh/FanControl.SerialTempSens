@@ -37,16 +37,17 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
 
-    # - name: Install tools
-    #   run: |
-    #     sudo apt update
-    #     sudo apt install -y unzip curl
-    #     curl -L -O https://github.com/protocolbuffers/protobuf/releases/download/v25.1/protoc-25.1-linux-x86_64.zip
-    #     sudo unzip -o protoc-25.1-linux-x86_64.zip -d /usr/local
+    - name: Install tools
+      shell: pwsh
+      run: |
+        curl -L -O https://github.com/protocolbuffers/protobuf/releases/download/v26.1/protoc-26.1-win64.zip
+        Expand-Archive -LiteralPath protoc-26.1-win64.zip -DestinationPath protoc
 
-    # - name: Generate protobuf source
-    #   run: |
-    #     ./protobufGen.cmd
+    - name: Generate protobuf source
+      shell: pwsh
+      run: |
+        mkdir build\gen
+        ./protoc/protoc.exe --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
 
     - name: Restore
       run: dotnet restore
