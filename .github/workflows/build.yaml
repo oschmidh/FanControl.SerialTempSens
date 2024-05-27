@@ -4,17 +4,9 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.gitignore'
-      - '**/*.gitattributes'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.gitignore'
-      - '**/*.gitattributes'
   workflow_dispatch:
 
 jobs:
@@ -49,9 +41,6 @@ jobs:
         mkdir build\gen
         ./protoc/bin/protoc.exe --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
 
-    # - name: Restore
-    #   run: dotnet restore
-
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2
 
@@ -60,9 +49,6 @@ jobs:
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
-
-    # - name: Test
-    #   run: dotnet test
 
     - name: Archive dlls
       uses: actions/upload-artifact@v4
