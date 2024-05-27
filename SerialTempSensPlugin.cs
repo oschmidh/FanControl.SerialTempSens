@@ -20,7 +20,7 @@ namespace FanControl.SerialTempSensPlugin
 
         public void Initialize()
         {
-            const var ports = GetComPort(usbVid, usbPid);
+            var ports = GetComPort(usbVid, usbPid);
             if (ports.Count < 1)
             {
                 // TODO log error
