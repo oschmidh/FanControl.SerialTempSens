@@ -20,15 +20,15 @@ jobs:
           workflow: build.yml
           branch: main
           event: push
+          skip_unpack: true
           name: FanControl.SerialTempSens
 
       - name: Rename File
         run: |
-          mkdir release
-          cp ./zephyr.hex release/serialTempSens_${{ github.ref_name }}.hex
+          cp ./FanControl.SerialTempSens.zip FanControl.SerialTempSens_${{ github.ref_name }}.zip
 
       - name: Publish Release
         uses: softprops/action-gh-release@v2
         with:
           fail_on_unmatched_files: true
-          files: release/serialTempSens_${{ github.ref_name }}.hex
+          files: FanControl.SerialTempSens_${{ github.ref_name }}.zip
