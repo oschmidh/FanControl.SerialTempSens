@@ -13,15 +13,15 @@ jobs:
   build:
     name: Build
     runs-on: windows-latest
-    env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      DOTNET_NOLOGO: true
-      DOTNET_GENERATE_ASPNET_CERTIFICATE: false
-      DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
-      DOTNET_MULTILEVEL_LOOKUP: 0
-      DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: true
-      TERM: xterm
+    # env:
+      # DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      # DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      # DOTNET_NOLOGO: true
+      # DOTNET_GENERATE_ASPNET_CERTIFICATE: false
+      # DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
+      # DOTNET_MULTILEVEL_LOOKUP: 0
+      # DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: true
+      # TERM: xterm
 
     steps:
     - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
       run: nuget restore FanControl.SerialTempSens.sln
 
     - name: Build
-      run: msbuild FanControl.SerialTempSens.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
+      run: msbuild FanControl.SerialTempSens.csproj -t:rebuild -property:Configuration=Release
 
     - name: Archive dlls
       uses: actions/upload-artifact@v4
