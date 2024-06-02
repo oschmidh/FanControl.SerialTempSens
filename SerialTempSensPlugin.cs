@@ -5,9 +5,11 @@ using System;
 using System.IO.Ports;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Runtime.Versioning;
 
 namespace FanControl.SerialTempSensPlugin
 {
+    [SupportedOSPlatform("windows")]
     public class SerialTempSensPlugin : IPlugin
     {
         private bool _isInitialised = false;
