@@ -35,12 +35,6 @@ jobs:
         curl -L -O https://github.com/protocolbuffers/protobuf/releases/download/v26.1/protoc-26.1-win64.zip
         Expand-Archive -LiteralPath protoc-26.1-win64.zip -DestinationPath protoc
 
-    - name: Generate protobuf source
-      shell: pwsh
-      run: |
-        mkdir build\gen
-        ./protoc/bin/protoc.exe --proto_path=. --csharp_out=build/gen SerialTempSens_messages.proto
-
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2
 
