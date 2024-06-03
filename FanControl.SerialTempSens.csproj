@@ -35,7 +35,7 @@
   </ItemGroup>
 
    <Target Name="GenerateProtobufHeader" BeforeTargets="BeforeBuild">
-    <Exec Command="mkdir bin\generated | protoc --proto_path=. --csharp_out=bin/generated SerialTempSens_messages.proto" />
+    <Exec Command="mkdir bin\generated | protoc.exe --proto_path=. --csharp_out=bin/generated SerialTempSens_messages.proto" />
     <ItemGroup>
       <Compile Include="**/*$(DefaultLanguageSourceExtension)" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(BaseIntermediateOutputPath)**;$(BaseOutputPath)**;@(Compile)" />
     </ItemGroup>
