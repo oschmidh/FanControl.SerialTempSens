@@ -29,13 +29,6 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
 
-    # - name: Install tools
-    #   shell: pwsh
-    #   run: |
-    #     curl -L -O https://github.com/protocolbuffers/protobuf/releases/download/v26.1/protoc-26.1-win64.zip
-    #     Expand-Archive -LiteralPath protoc-26.1-win64.zip -DestinationPath protoc
-    #     setx PATH "%PATH%;$pwd/protoc/bin/protoc.exe" -m
-
     - name: Install tools
       run: choco install protoc
 
