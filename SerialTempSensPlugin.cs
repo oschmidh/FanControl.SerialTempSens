@@ -56,8 +56,6 @@ namespace FanControl.SerialTempSensPlugin
                     _container.TempSensors.Add(sensor);
                 }
             }
-            // SerialTempSens sensor = new SerialTempSens(_serialPort);
-            // _container.TempSensors.Add(sensor);
         }
 
         public void Close()
