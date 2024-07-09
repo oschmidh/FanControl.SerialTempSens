@@ -17,6 +17,8 @@ namespace FanControl.SerialTempSensPlugin
         private const string usbVid = "2FE3";
         private const string usbPid = "0100";
 
+        private const uint numSensors = 3;
+
         public string Name => "SerialTempSens";
 
         public void Initialize()
@@ -41,10 +43,18 @@ namespace FanControl.SerialTempSensPlugin
 
         public void Load(IPluginSensorsContainer _container)
         {
-            if (_isInitialised)
+            if (!_isInitialised)
             {
-                SerialTempSens sensor = new SerialTempSens(_serialPort);
-                _container.TempSensors.Add(sensor);
+                return;
+            }
+
+            for (uint i = 0; i < numSensors; ++i)
+            {
+                SerialTempSens sensor = new SerialTempSens(_serialPort, i);
+                if (sensor.IsPresent())
+                {
+                    _container.TempSensors.Add(sensor);
+                }
             }
         }
 

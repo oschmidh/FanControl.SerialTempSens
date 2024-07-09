@@ -8,9 +8,13 @@ namespace FanControl.SerialTempSensPlugin
 {
     internal class SerialTempSens : IPluginSensor
     {
-        public SerialTempSens(SerialPort serialPort) { _serialPort = serialPort; }
+        public SerialTempSens(SerialPort serialPort, uint sensIndex)
+        {
+            _serialPort = serialPort;
+            _sensIndex = sensIndex;
+        }
 
-        private readonly uint _sensIndex = 0; // TODO set index
+        private readonly uint _sensIndex;
 
         public float? Value { get; private set; }
 
@@ -18,10 +22,32 @@ namespace FanControl.SerialTempSensPlugin
 
         public string Id => "Sens_" + _sensIndex.ToString();
 
+        public bool IsPresent()
+        {
+            Command cmd = new Command { SensorId = _sensIndex };
+            Reply? rply = sendCommand(cmd);
+            if (rply == null)
+            {
+                return false;
+            }
+            return rply.Error != ErrorCode.SensorOpen && rply.Error != ErrorCode.InvalidSensorId;
+        }
+
         public void Update()
         {
             Command cmd = new Command { SensorId = _sensIndex };
+            Reply? rply = sendCommand(cmd);
+            if (rply == null || rply.Error != ErrorCode.NoError)
+            {
+                Value = null;
+                return;
+            }
 
+            Value = rply.Temperature / 1000.0F;   // Data is in m°C
+        }
+
+        private Reply? sendCommand(Command cmd)
+        {
             byte[] msg;
             using (var stream = new MemoryStream())
             {
@@ -40,10 +66,9 @@ namespace FanControl.SerialTempSensPlugin
 
                 Reply reply = new Reply();
                 reply.MergeFrom(rply);
-
-                Value = reply.Temperature / 1000.0F;   // Data is in m°C
+                return reply;
             }
-            catch (TimeoutException) { }
+            catch (TimeoutException) { return null; }
         }
 
         private SerialPort _serialPort;
