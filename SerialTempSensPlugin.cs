@@ -9,11 +9,10 @@ using System.Runtime.Versioning;
 
 namespace FanControl.SerialTempSensPlugin
 {
-    [SupportedOSPlatform("windows")]
     public class SerialTempSensPlugin : IPlugin
     {
         private bool _isInitialised = false;
-        private SerialPort _serialPort;
+        private SerialPort _serialPort = new SerialPort();
 
         private const string usbVid = "2FE3";
         private const string usbPid = "0100";
@@ -32,7 +31,6 @@ namespace FanControl.SerialTempSensPlugin
                 // TODO log warning, multiple devices found, first port chosen?
             }
 
-            _serialPort = new SerialPort();
             _serialPort.BaudRate = 115200;
             _serialPort.PortName = ports[0];
             _serialPort.ReadTimeout = 500;

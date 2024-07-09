@@ -39,11 +39,11 @@ jobs:
       run: nuget restore FanControl.SerialTempSens.sln
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet publish -c Release
 
     - name: Archive dlls
       uses: actions/upload-artifact@v4
       with:
         name: FanControl.SerialTempSens
         path: |
-          bin/Release/**
+          bin/Release/net48/publish/**
