@@ -46,4 +46,4 @@ jobs:
       with:
         name: FanControl.SerialTempSens
         path: |
-          bin/Release/**
+          bin/Release/net48/publish/**
