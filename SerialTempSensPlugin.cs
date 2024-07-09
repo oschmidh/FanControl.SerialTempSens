@@ -9,7 +9,6 @@ using System.Runtime.Versioning;
 
 namespace FanControl.SerialTempSensPlugin
 {
-    [SupportedOSPlatform("windows")]
     public class SerialTempSensPlugin : IPlugin
     {
         private bool _isInitialised = false;
