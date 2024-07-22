@@ -57,18 +57,26 @@ namespace FanControl.SerialTempSensPlugin
 
             _serialPort.Write(msg, 0, msg.Length);
 
+            byte[] rply;
             try
             {
                 var len = _serialPort.ReadByte();
 
-                byte[] rply = new byte[len];
+                rply = new byte[len];
                 _serialPort.Read(rply, 0, len);
-
-                Reply reply = new Reply();
-                reply.MergeFrom(rply);
-                return reply;
             }
             catch (TimeoutException) { return null; }
+
+            Reply reply = new Reply();
+            try
+            {
+                reply.MergeFrom(rply);
+            }
+            catch (Google.Protobuf.InvalidProtocolBufferException)
+            {
+                return null;
+            }
+            return reply;
         }
 
         private SerialPort _serialPort;
