@@ -8,10 +8,11 @@ namespace FanControl.SerialTempSensPlugin
 {
     internal class SerialTempSens : IPluginSensor
     {
-        public SerialTempSens(SerialPort serialPort, uint sensIndex)
+        public SerialTempSens(SerialPort serialPort, IPluginLogger logger,uint sensIndex)
         {
             _serialPort = serialPort;
             _sensIndex = sensIndex;
+            _logger = logger;
         }
 
         private readonly uint _sensIndex;
@@ -21,6 +22,8 @@ namespace FanControl.SerialTempSensPlugin
         public string Name => $"NTC Sensor {(int)_sensIndex + 1}";
 
         public string Id => "Sens_" + _sensIndex.ToString();
+
+        private IPluginLogger _logger;
 
         public bool IsPresent()
         {
@@ -72,8 +75,12 @@ namespace FanControl.SerialTempSensPlugin
             {
                 reply.MergeFrom(rply);
             }
-            catch (Google.Protobuf.InvalidProtocolBufferException)
-            {
+            catch {
+                String logMsg = "failed to parse protobuf reply ";
+                foreach (byte b in rply) {
+                    logMsg += b.ToString();
+                }
+                _logger.Log(logMsg);
                 return null;
             }
             return reply;

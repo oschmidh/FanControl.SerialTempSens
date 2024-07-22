@@ -11,8 +11,11 @@ namespace FanControl.SerialTempSensPlugin
 {
     public class SerialTempSensPlugin : IPlugin
     {
+        public SerialTempSensPlugin(IPluginLogger logger) { _logger = logger; }
+
         private bool _isInitialised = false;
         private SerialPort _serialPort = new SerialPort();
+        private IPluginLogger _logger;
 
         private const string usbVid = "2FE3";
         private const string usbPid = "0100";
@@ -26,11 +29,11 @@ namespace FanControl.SerialTempSensPlugin
             var ports = GetComPort(usbVid, usbPid);
             if (ports.Count < 1)
             {
-                // TODO log error
+                _logger.Log("No COM-Ports found");
                 return;
             } else if (ports.Count > 1) 
             {
-                // TODO log warning, multiple devices found, first port chosen?
+                _logger.Log("Multiple SerialTempSens devices found, choosing the first one");
             }
 
             _serialPort.BaudRate = 115200;
@@ -50,7 +53,7 @@ namespace FanControl.SerialTempSensPlugin
 
             for (uint i = 0; i < numSensors; ++i)
             {
-                SerialTempSens sensor = new SerialTempSens(_serialPort, i);
+                SerialTempSens sensor = new SerialTempSens(_serialPort, _logger, i);
                 if (sensor.IsPresent())
                 {
                     _container.TempSensors.Add(sensor);
